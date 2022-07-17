@@ -11,7 +11,9 @@ When you checkout this repo move all the files _(apart from the `README.md`)_ to
 ...
 # Minute   Hour   Day of Month       Month          Day of Week        Command
 # (0-59)  (0-23)     (1-31)    (1-12 or Jan-Dec)  (0-6 or Sun-Sat)
-   */30      *         *               *                *              ~/crypto.sh
+*/15 * * * * /bin/bash -c "/home/USERNAME/.conky/crypto.sh"
+*/1 * * * * /bin/bash -c "/home/USERNAME/.conky/node.sh"
+
 ...
 ~# ls -l
 ...
@@ -24,20 +26,20 @@ crypto_conky.txt
 ...
 ```
 Edit the coins in `crypto.py` to add your own coins by doing...
+Edit the pathes and wallets in `node.sh` to add your individual stats...
 ```
 ~# rm coins.json  # <- it is important to reomve this file as it is a cache file
 ~# vim crypto.py
 ...
 coinNames = [
-    'ICX',
-    'ETH',
-    'EOS',
-    'LTC',
-    'NEO',
-    '...',  # <- Add your coin here
-    'DASH',
+	'BTC',
+	'BNB',
+	'KLV',
+	'AVA',
+	'KCS',
+
 ]
 ~# crypto.sh
 ```
 
-![Alt text](/screenshot.png?raw=true "Preview")
+![Alt text](/img/screenshot.jpg?raw=true "Preview")

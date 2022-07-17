@@ -7,8 +7,8 @@ color_green = 'color3'
 millnames = ['','T','M','B','T']
 millnamesfull = ['',' Thousand',' Million',' Billion',' Trillion']
 
-coins_filename = 'coins.json'
-filename = 'crypto_conky.txt'
+coins_filename = '.conky/coins.json'
+filename = '.conky/crypto_conky.txt'
 
 api_key = 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
 
@@ -51,12 +51,12 @@ def apiRequest(url, args = None):
 	return r.json()
 
 coinNames = [
-	'ICX',
-	'ETH',
-	'EOS',
-	'LTC',
-	'NEO',
-	'DASH',
+	'BTC',
+	'BNB',
+	'KLV',
+	'AVA',
+	'KCS',
+
 ]
 
 coins = {}
@@ -123,7 +123,7 @@ for id, coin in coins.items():
 		coinData[coin] = {}
 		coinData[coin]['rank']                   = int(coinInfo['cmc_rank'])
 		coinData[coin]['percent_in_circulation'] = round((float(cs)/(int(ts)/100)), 2) if cs and ts else -100.0
-		coinData[coin]['price']                  = round(float(price), 2)
+		coinData[coin]['price']                  = round(float(price), 4)
 		coinData[coin]['volume_24h']             = millify(v24) if v24 else 0.0
 		coinData[coin]['market_cap']             = millify(mc) if mc else millify(mce)
 		coinData[coin]['volume_as_percent']      = round((float(v24)/(int(mc)/100)), 2) if v24 and mc else -100.0
@@ -166,19 +166,19 @@ if btc_price > 10000.0:
 if btc_price > 20000.0:
 	btc_color = color_green
 
-file.write("${font sans-serif:bold:size=11}CRYPTO ${hr 2}\n")
+file.write("${font sans-serif:bold:size=12}CRYPTO ${hr 2}\n")
 file.write("${font sans-serif:bold:size=10}Bitcoin Price:${alignr}${"+btc_color+"}"+str(btc_price)+"$color\n")
 file.write("${font sans-serif:bold:size=10}Trading Volume:${alignr}${"+tvp_color+"}"+str(tvp)+"%$color\n")
 file.write("${font sans-serif:bold:size=10}Bitcoin Market Share:${alignr}${"+bp_colour+"}"+str(bp)+"%$color\n")
 file.write("${font sans-serif:bold:size=10}Total Market Cap:${alignr}${"+tmc_colour+"}"+millifyfull(globalData['data']['quote']['USD']['total_market_cap'])+"$color\n")
 
-file.write("${font sans-serif:bold:size=2} \n")
-file.write("${font sans-serif:bold:size=8}COIN${goto 50}MC${goto 90}Price${goto 120}Vol %${goto 165}1hr${goto 205}24hr${goto 245}7d\n")
+file.write("${font sans-serif:bold:size=4} \n")
+file.write("${font sans-serif:bold:size=8}COIN${goto 40}MC${goto 85}Price${goto 140}Vol %${goto 180}1hr${goto 215}24hr${goto 260}7d\n")
 file.write("${hr 1}\n")
 
 # dict((y,x) for x,y in my_dict.iteritems())
 for coin in sorted(dict((y,x) for x,y in coins.items()).keys()):
-	if coin is not 'BTC':
-		file.write('${font sans-serif:normal:size=8}'+str(coin)+': ${goto 50}'+str(coinData[coin]["market_cap"])+'${goto 90}'+str(coinData[coin]["price"])+'${goto 125}${'+coinData[coin]["volume_as_percent_colour"]+'}'+str(coinData[coin]["volume_as_percent"])+'${goto 160}${'+coinData[coin]["percent_change_1h_colour"]+'}'+str(coinData[coin]["percent_change_1h"])+'${goto 200}${'+coinData[coin]["percent_change_24h_colour"]+'}'+str(coinData[coin]["percent_change_24h"])+'${goto 240}${'+coinData[coin]["percent_change_7d_colour"]+'}'+str(coinData[coin]["percent_change_7d"])+'$color\n')
+	if coin != 'BTC':
+		file.write('${font sans-serif:normal:size=8}'+str(coin)+': ${goto 35}'+str(coinData[coin]["market_cap"])+'${goto 85}'+str(coinData[coin]["price"])+'${goto 140}${'+coinData[coin]["volume_as_percent_colour"]+'}'+str(coinData[coin]["volume_as_percent"])+'${goto 180}${'+coinData[coin]["percent_change_1h_colour"]+'}'+str(coinData[coin]["percent_change_1h"])+'${goto 215}${'+coinData[coin]["percent_change_24h_colour"]+'}'+str(coinData[coin]["percent_change_24h"])+'${goto 250}${'+coinData[coin]["percent_change_7d_colour"]+'}'+str(coinData[coin]["percent_change_7d"])+'$color\n')
 
 file.close()
