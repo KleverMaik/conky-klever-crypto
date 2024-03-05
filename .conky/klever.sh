@@ -4,7 +4,7 @@
 # Also retrieve staking rewards of indivitual wallets,
 # as well as some general tokenomics of Klever Blockchain.
 # Written by Maik L. @ community-node.ath.cx - 2022
-# Version 0.2.1
+# Version 0.2.2
 
 # If you do NOT run a Klever node, this part need to be commented.
 # Adjust your IP, wallet address, BLS_KEY and local directory.
@@ -125,7 +125,7 @@ fi
 echo '${stippled_hr}' >> $TEMPFILE
 
 # Don't change the following lines.
-KLVPRICE='curl https://api.exchange.klever.io/v1/market/ticker?symbol=KLV-USDT'
+KLVPRICE='curl https://api.exchange.bitcoin.me/v1/market/ticker?symbol=KLV-USDT'
 priceval=.price
 
 calcrew=$($KLVPRICE | jq $priceval | sed 's/.\(.*\)/\1/' | sed 's/\(.*\)./\1/' | bc -l | xargs printf "%.4f")
